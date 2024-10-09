@@ -13,6 +13,12 @@ public class EcommerceAppPermissionDefinitionProvider : PermissionDefinitionProv
 
         //Define your own permissions here. Example:
         //myGroup.AddPermission(EcommerceAppPermissions.MyPermission1, L("Permission:MyPermission1"));
+        var productGroup = context.AddGroup(EcommerceAppPermissions.ProductGroupName, L("EcommercApp.Products"));
+        productGroup.AddPermission(EcommerceAppPermissions.CreateEditProductPermission, L("Permission:Products:CreateEditProduct"));
+        productGroup.AddPermission(EcommerceAppPermissions.DeleteProductPermission, L("Permission:Products:DeleteProduct"));
+        productGroup.AddPermission(EcommerceAppPermissions.GetProductPermission, L("Permission:Products:GetProduct"));
+        productGroup.AddPermission(EcommerceAppPermissions.ListProductPermission, L("Permission:Products:ListProduct"));
+
     }
 
     private static LocalizableString L(string name)
