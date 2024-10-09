@@ -14,6 +14,8 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using EcommerceApp.Categories;
+using EcommerceApp.Products;
 
 namespace EcommerceApp.EntityFrameworkCore;
 
@@ -57,6 +59,9 @@ public class EcommerceAppDbContext :
 
     #endregion
 
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Category> Categories { get; set; }
+
     public EcommerceAppDbContext(DbContextOptions<EcommerceAppDbContext> options)
         : base(options)
     {
@@ -78,14 +83,10 @@ public class EcommerceAppDbContext :
         builder.ConfigureOpenIddict();
         builder.ConfigureTenantManagement();
         builder.ConfigureBlobStoring();
-        
-        /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(EcommerceAppConsts.DbTablePrefix + "YourEntities", EcommerceAppConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        //builder.ApplyConfiguration(new ProductConfiguration());
+        //builder.ApplyConfiguration(new CategoryConfiguration());
+
+        builder.ApplyConfigurationsFromAssembly(typeof(EcommerceAppDbContext).Assembly);
     }
 }
