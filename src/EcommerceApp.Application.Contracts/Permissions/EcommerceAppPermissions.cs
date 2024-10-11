@@ -10,5 +10,5 @@ public static class EcommerceAppPermissions
     public const string CreateEditProductPermission = ProductGroupName + ".CreateEdit";
     public const string DeleteProductPermission = ProductGroupName + ".Delete";
     public const string GetProductPermission = ProductGroupName + ".Get";
-    public const string ListProductPermission = ProductGroupName + ".List";
+    public const string ListProductPermission = ProductGroupName + ".List"; 
 }

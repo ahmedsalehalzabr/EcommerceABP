@@ -2,6 +2,7 @@
 using EcommerceApp.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,22 +17,25 @@ namespace EcommerceApp.Products
     {
         #region field
         private readonly IRepository<Product, int> productsRepository;
+        private readonly IStringLocalizerFactory stringLocalizer;
         #endregion
 
         #region ctor
-        public ProductsAppService(IRepository<Product, int> productsRepository)
+        public ProductsAppService(IRepository<Product, int> productsRepository,
+            IStringLocalizerFactory stringLocalizer)
         {
             this.productsRepository = productsRepository;
+            this.stringLocalizer = stringLocalizer;
         }
 
         #endregion
 
         #region IProductsAppService
-      ////  [Authorize(EcommerceAppPermissions.CreateEditProductPermission)]
+        //[Authorize(EcommerceAppPermissions.CreateEditProductPermission)]
         public async Task<ProductDto> CreateProductAsync(CreateUpdateProductDto input)
         {
             //VALIDATION
-            var valid = new CreateUpdateProductValidator().Validate(input);
+            var valid = new CreateUpdateProductValidator(stringLocalizer).Validate(input);
             if (!valid.IsValid)
             {
                 var exception = GetValidationException(valid);
@@ -42,7 +46,7 @@ namespace EcommerceApp.Products
             return ObjectMapper.Map<Product, ProductDto>(inserted);
         }
 
-       //[Authorize(EcommerceAppPermissions.DeleteProductPermission)]
+        [Authorize(EcommerceAppPermissions.DeleteProductPermission)]
         public async Task<bool> DeleteProductAsync(int id)
         {
             var existingProduct = await productsRepository.GetAsync(id);
@@ -54,7 +58,7 @@ namespace EcommerceApp.Products
             return true;
         }
 
-      //  [Authorize(EcommerceAppPermissions.ListProductPermission)]
+        [Authorize(EcommerceAppPermissions.ListProductPermission)]
         public async Task<PagedResultDto<ProductDto>> GetListAsync(GetProductListDto input)
         {
             if (input.Sorting.IsNullOrWhiteSpace())
@@ -75,7 +79,7 @@ namespace EcommerceApp.Products
                                     product => product.CategoryId == input.CategoryId
                                  )
                                 .Skip(input.SkipCount)
-                                .Take(input.MaxResultCount)
+                                .Take(input.MaxResultCount) 
                                 .OrderBy(input.Sorting)
                                 .ToListAsync();
             var totalCount = input.Filter == null
@@ -88,7 +92,7 @@ namespace EcommerceApp.Products
 
         }
 
-      //  [Authorize(EcommerceAppPermissions.GetProductPermission)]
+        [Authorize(EcommerceAppPermissions.GetProductPermission)]
         public async Task<ProductDto> GetProductAsync(int id)
         {
             var product = await productsRepository
@@ -103,11 +107,11 @@ namespace EcommerceApp.Products
             return ObjectMapper.Map<Product, ProductDto>(product);
         }
 
-      //  [Authorize(EcommerceAppPermissions.CreateEditProductPermission)]
+        [Authorize(EcommerceAppPermissions.CreateEditProductPermission)]
         public async Task<ProductDto> UpdateProductAsync(CreateUpdateProductDto input)
         {
             //VALIDATION
-            var valid = new CreateUpdateProductValidator().Validate(input);
+            var valid = new CreateUpdateProductValidator(stringLocalizer).Validate(input);
             if (!valid.IsValid)
             {
                 var exception = GetValidationException(valid);

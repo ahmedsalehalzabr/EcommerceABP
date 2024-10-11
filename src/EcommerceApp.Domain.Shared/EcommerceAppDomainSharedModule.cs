@@ -49,6 +49,11 @@ public class EcommerceAppDomainSharedModule : AbpModule
                 .AddBaseTypes(typeof(AbpValidationResource))
                 .AddVirtualJson("/Localization/EcommerceApp");
 
+            options.Resources
+                .Add<ProductsResource>("en")
+                .AddBaseTypes(typeof(AbpValidationResource))
+                .AddVirtualJson("/Localization/Products");
+
             options.DefaultResourceType = typeof(EcommerceAppResource);
         });
 

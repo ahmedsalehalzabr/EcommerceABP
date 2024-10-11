@@ -1,6 +1,6 @@
 import { CoreModule } from '@abp/ng.core';
 import { SettingManagementConfigModule } from '@abp/ng.setting-management/config';
-import { ThemeSharedModule } from '@abp/ng.theme.shared';
+import { InternetConnectionStatusComponent, ThemeSharedModule } from '@abp/ng.theme.shared';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,14 +27,19 @@ import { AbpOAuthModule } from '@abp/ng.oauth';
       registerLocaleFn: registerLocale(),
     }),
     AbpOAuthModule.forRoot(),
-    AccountConfigModule.forRoot(),
-    TenantManagementConfigModule.forRoot(),
-    IdentityConfigModule.forRoot(),
     ThemeSharedModule.forRoot(),
+    
+    AccountConfigModule.forRoot(),
+    IdentityConfigModule.forRoot(),
+    TenantManagementConfigModule.forRoot(),
     SettingManagementConfigModule.forRoot(),
+    
+    
+    FeatureManagementModule.forRoot(),
+    InternetConnectionStatusComponent,
     ThemeLeptonXModule.forRoot(),
     SideMenuLayoutModule.forRoot(),
-    FeatureManagementModule.forRoot(),
+    
   ],
   providers: [APP_ROUTE_PROVIDER],
   bootstrap: [AppComponent],

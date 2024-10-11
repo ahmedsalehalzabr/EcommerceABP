@@ -34,4 +34,14 @@
     <Content Remove="Localization\EcommerceApp\*.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Localization\Products\ar.json" />
+    <None Remove="Localization\Products\en.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Products\ar.json" />
+    <EmbeddedResource Include="Localization\Products\en.json" />
+  </ItemGroup>
+
 </Project>
