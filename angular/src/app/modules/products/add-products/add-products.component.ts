@@ -7,8 +7,6 @@ import { CreateUpdateProductDto, ProductsService } from '@proxy/products';
 
 @Component({
   selector: 'app-add-products',
-  standalone: true,
-  imports: [ReactiveFormsModule],
   templateUrl: './add-products.component.html',
   styleUrl: './add-products.component.scss'
 })

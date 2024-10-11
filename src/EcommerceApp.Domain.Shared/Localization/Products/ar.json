@@ -1,7 +1,7 @@
 {
   "culture": "ar",
   "texts": {
-    "Demo1.Products": "المنتجات",
+    "EcommerceApp.Products": "المنتجات",
     "Permission:Products:CreateEditProduct": "إنشاء وتعديل منتج",
     "Permission:Products:GetProduct": "عرض منتج",
     "Permission:Products:ListProduct": "عرض المنتجات",
@@ -13,14 +13,16 @@
     "Products:InvalidProductCategory": "تصنيف المنتج غير صالح",
     "AddProduct:ProductNameAr": "اسم المنتج باللغة العربية",
     "AddProduct:ProductNameEn": "اسم المنتج باللغة الانجليزية",
+    "AddProduct:ProductPrice": "سعر المنتج",
+    "AddProduct:ProductImageUrl": "رابط صورة المنتج",
     "AddProduct:ProductDescAr": "وصف المنتج باللغة العربية",
     "AddProduct:ProductDescEn": "وصف المنتج باللغة الانجليزية",
     "AddProduct:ProductCategory": "التصنيف",
-    "Demo1.Products:STORE_PRODUCTS_0001": "المنتج غير موجود!",
-    "Demo1.Products:STORE_PRODUCTS_0002": "اسم المنتج باللغة العربية غير صالح!",
-    "Demo1.Products:STORE_PRODUCTS_0003": "اسم المنتج باللغة الانجليزية غير صالح!",
-    "Demo1.Products:STORE_PRODUCTS_0004": "وصف المنتج باللغة العربية غير صالح!",
-    "Demo1.Products:STORE_PRODUCTS_0005": "وصف المنتج باللغة الانجليزية غير صالح!",
-    "Demo1.Products:STORE_PRODUCTS_0006": "تصنيف المنتج غير صالح!"
+    "EcommerceApp.Products:STORE_PRODUCTS_0001": "المنتج غير موجود!",
+    "EcommerceApp.Products:STORE_PRODUCTS_0002": "اسم المنتج باللغة العربية غير صالح!",
+    "EcommerceApp.Products:STORE_PRODUCTS_0003": "اسم المنتج باللغة الانجليزية غير صالح!",
+    "EcommerceApp.Products:STORE_PRODUCTS_0004": "وصف المنتج باللغة العربية غير صالح!",
+    "EcommerceApp.Products:STORE_PRODUCTS_0005": "وصف المنتج باللغة الانجليزية غير صالح!",
+    "EcommerceApp.Products:STORE_PRODUCTS_0006": "تصنيف المنتج غير صالح!"
   }
 }

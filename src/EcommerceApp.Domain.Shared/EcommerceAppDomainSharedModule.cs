@@ -59,7 +59,7 @@ public class EcommerceAppDomainSharedModule : AbpModule
 
         Configure<AbpExceptionLocalizationOptions>(options =>
         {
-            options.MapCodeNamespace("EcommerceApp", typeof(EcommerceAppResource));
+            options.MapCodeNamespace("EcommerceApp.Products", typeof(ProductsResource));
         });
     }
 }

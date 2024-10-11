@@ -16,10 +16,12 @@ import { FeatureManagementModule } from '@abp/ng.feature-management';
 import { ThemeLeptonXModule } from '@abp/ng.theme.lepton-x';
 import { SideMenuLayoutModule } from '@abp/ng.theme.lepton-x/layouts';
 import { AbpOAuthModule } from '@abp/ng.oauth';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     CoreModule.forRoot({
