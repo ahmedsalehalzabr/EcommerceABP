@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
 
 namespace EcommerceApp.Products
 {
-    public class Product : FullAuditedEntity<int>
+    public class Product : FullAuditedEntity<int>, IMultiTenant
     {
         public string NameAr { get; set; }
         public string NameEn { get; set; }
@@ -19,5 +20,7 @@ namespace EcommerceApp.Products
 
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+
+        public Guid? TenantId { get; set; }
     }
 }

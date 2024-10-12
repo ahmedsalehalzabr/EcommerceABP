@@ -24,17 +24,17 @@ namespace EcommerceApp.Data.Categories
             {
                 var categories = new List<Category>
             {
-                new Category(id:1,
+                new Category(
                      nameAr:"اطعمة ومشروبات",
                      nameEn:"Food & Drinks",
                      descriptionAr:"جميع انواع الاطعمة والماكولات",
                      descriptionEn:"All food and drink categories"),
-                new Category(id:2,
+                new Category(
                      nameAr:"مواد منظفة",
                      nameEn:"Detergents",
                      descriptionAr:"المنظفات بانواعها",
                      descriptionEn:"All matrials used for ckeaniing"),
-                new Category(id:4,
+                new Category(
                      nameAr:"بلاستيك",
                      nameEn:"Plastic",
                      descriptionAr:"البلاستيك القابل للتدوير والغير القابل للتدوير",

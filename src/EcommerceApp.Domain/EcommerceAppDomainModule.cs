@@ -64,7 +64,11 @@ public class EcommerceAppDomainModule : AbpModule
             //options.Languages.Add(new LanguageInfo("de-DE", "de-DE", "Deutsch"));
             //options.Languages.Add(new LanguageInfo("es", "es", "Español"));
         });
-        
+
+        Configure<AbpMultiTenancyOptions>(options =>
+        {
+            options.IsEnabled = MultiTenancyConsts.IsEnabled;
+        });
 
 #if DEBUG
         context.Services.Replace(ServiceDescriptor.Singleton<IEmailSender, NullEmailSender>());

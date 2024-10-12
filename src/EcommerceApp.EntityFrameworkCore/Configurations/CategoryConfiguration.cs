@@ -18,7 +18,8 @@ namespace EcommerceApp.Configurations
             builder.ConfigureByConvention();
 
             // ادخل الاي دي بيدي 
-            builder.Property(x => x.Id).ValueGeneratedNever();
+            // builder.Property(x => x.Id).ValueGeneratedNever();
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
             builder.Property(x => x.NameAr).HasMaxLength(EcommerceAppConsts.GeneralTextMaxlength);
             builder.Property(x => x.NameEn).HasMaxLength(EcommerceAppConsts.GeneralTextMaxlength);

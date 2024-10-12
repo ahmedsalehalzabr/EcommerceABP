@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace EcommerceApp.Migrations
 {
     [DbContext(typeof(EcommerceAppDbContext))]
-    [Migration("20241009113312_AddProductAndCategory")]
-    partial class AddProductAndCategory
+    [Migration("20241012110232_Multitanent")]
+    partial class Multitanent
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,7 +30,10 @@ namespace EcommerceApp.Migrations
             modelBuilder.Entity("EcommerceApp.Categories.Category", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2")
@@ -80,6 +83,10 @@ namespace EcommerceApp.Migrations
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("TenantId");
 
                     b.HasKey("Id");
 
@@ -152,6 +159,10 @@ namespace EcommerceApp.Migrations
 
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("TenantId");
 
                     b.HasKey("Id");
 
