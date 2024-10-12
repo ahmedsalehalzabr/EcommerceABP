@@ -9,7 +9,11 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
+using Volo.Abp.Authorization;
+using Volo.Abp.Data;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.MultiTenancy;
+using Volo.Abp.TenantManagement;
 
 namespace EcommerceApp.Products
 {
@@ -18,20 +22,32 @@ namespace EcommerceApp.Products
         #region field
         private readonly IRepository<Product, int> productsRepository;
         private readonly IStringLocalizerFactory stringLocalizer;
+       // private readonly IProductService productService;
+        private readonly ITenantRepository tenantsRepo;
+        private readonly IRepository<TenantConnectionString> tenantConnectionStrings;
+        private readonly IDataFilter dataFilter;
         #endregion
 
         #region ctor
         public ProductsAppService(IRepository<Product, int> productsRepository,
-            IStringLocalizerFactory stringLocalizer)
+            IStringLocalizerFactory stringLocalizer,
+          //  IProductService productService,
+            ITenantRepository tenantsRepo,
+            IRepository<TenantConnectionString> tenantConnectionStrings,
+            IDataFilter dataFilter)
         {
             this.productsRepository = productsRepository;
             this.stringLocalizer = stringLocalizer;
+          //  this.productService = productService;
+            this.tenantsRepo = tenantsRepo;
+            this.tenantConnectionStrings = tenantConnectionStrings;
+            this.dataFilter = dataFilter;
         }
 
         #endregion
 
         #region IProductsAppService
-        //[Authorize(EcommerceAppPermissions.CreateEditProductPermission)]
+        [Authorize(EcommerceAppPermissions.CreateEditProductPermission)]
         public async Task<ProductDto> CreateProductAsync(CreateUpdateProductDto input)
         {
             //VALIDATION
@@ -126,6 +142,68 @@ namespace EcommerceApp.Products
             var mapped = ObjectMapper.Map<CreateUpdateProductDto, Product>(input, existing);
             var updated = await productsRepository.UpdateAsync(mapped, autoSave: true);
             return ObjectMapper.Map<Product, ProductDto>(updated);
+        }
+
+        //[AllowAnonymous]
+        //public Task<bool> LabTestProductAsync(int id)
+        //{
+        //    //call lab test service
+
+        //    return Task.FromResult(true);
+        //}
+
+        //public async Task<bool> TestComplexPermissions()
+        //{
+        //    var result = await AuthorizationService.AuthorizeAsync(EcommerceAppPermissions.CreateEditProductPermission);
+        //    if (result.Succeeded == false)
+        //    {
+        //        //throw exception
+        //        throw new AbpAuthorizationException("You don't have permission for this action");
+        //    }
+
+        //    return true;
+        //}
+
+        public async Task<Dictionary<string, int>> GetProductsOfTenant()
+        {
+            var result = new Dictionary<string, int>();
+
+            try
+            {
+                var tenants = await tenantsRepo.GetListAsync();
+
+                foreach (var t in tenants)
+                {
+                    using (CurrentTenant.Change(t.Id))
+                    {
+                        result.Add($"{t.Name} Products", await productsRepository.CountAsync());
+                    }
+                }
+
+                // Get count on all tenants
+                using (dataFilter.Disable<IMultiTenant>())
+                {
+                    result.Add("All Products Count", await productsRepository.CountAsync());
+                }
+            }
+            catch (Exception ex)
+            {
+                // سجل الخطأ أو أعد إلقاء استثناء مفيد
+                Console.WriteLine($"Error occurred: {ex.Message}");
+            }
+
+            return result;
+        }
+
+        public async Task ChangeTenantsConnectionString()
+        {
+            var tenants = await tenantsRepo.GetListAsync();
+
+            foreach (var t in tenants)
+            {
+                var connstr = $"Server=DESKTOP-2Q7HSLN\\SQLEXPRESS;Password=771143849;User Id=sa;Database=ABPmDb_{t.Name};TrustServerCertificate=True;Persist Security Info=True;";
+                await tenantConnectionStrings.InsertAsync(new TenantConnectionString(t.Id, ConnectionStrings.DefaultConnectionStringName, connstr));
+            }
         }
         #endregion
     }
